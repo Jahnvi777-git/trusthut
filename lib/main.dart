@@ -27,44 +27,30 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Color(0xFF331C08), // Dark brown for primary elements
-        scaffoldBackgroundColor: Color(
-          0xFFFFD3AC,
-        ), // Light peach for background
+        scaffoldBackgroundColor: Color(0xFFFFD3AC), // Light peach for background
         appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFF331C08),
-          foregroundColor: Colors.white,
+          backgroundColor: Color(0xFF331C08), // Dark brown for AppBar
+          foregroundColor: Colors.white, // White text for AppBar
           elevation: 0,
         ),
         textTheme: TextTheme(
-          displayLarge: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF331C08),
-          ),
-          titleLarge: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF331C08),
-          ),
+          displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF331C08)),
+          titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF331C08)),
           bodyLarge: TextStyle(fontSize: 16, color: Color(0xFF331C08)),
           bodyMedium: TextStyle(fontSize: 14, color: Color(0xFF331C08)),
         ),
-        cardColor: Color(0xFFCCBEB1), // Beige for cards
+        cardColor: Color(0xFF664C36), // Medium brown for cards
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF664C36), // Medium brown for buttons
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            backgroundColor: Color(0xFF331C08), // Dark brown for buttons
+            foregroundColor: Colors.white, // White text for buttons
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFF331C08),
-          selectedItemColor: Color(
-            0xFFFFD3AC,
-          ), // Light peach for selected items
-          unselectedItemColor: Color(0xFFCCBEB1), // Beige for unselected items
+          backgroundColor: Color(0xFFFFD3AC), // Light cream color for BottomNavigationBar
+          selectedItemColor: Color(0xFF331C08), // Dark brown for selected items
+          unselectedItemColor: Color(0xFF664C36), // Medium brown for unselected items
         ),
       ),
       initialRoute: '/',

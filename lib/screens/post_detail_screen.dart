@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostDetailScreen extends StatelessWidget {
-  final QueryDocumentSnapshot post;
+  final Map<String, dynamic> post;
 
   const PostDetailScreen({Key? key, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(post['title']),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(post['title']), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -23,10 +19,7 @@ class PostDetailScreen extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
-            Text(
-              "Rating: ${post['rating']} ⭐",
-              style: TextStyle(fontSize: 18),
-            ),
+            Text("Rating: ${post['rating']} ⭐", style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
             Text(
               "Location: ${post['location']}",
@@ -45,10 +38,7 @@ class PostDetailScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            Text(
-              post['description'],
-              style: TextStyle(fontSize: 16),
-            ),
+            Text(post['description'], style: TextStyle(fontSize: 16)),
           ],
         ),
       ),
