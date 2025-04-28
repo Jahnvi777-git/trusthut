@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:trusthut/screens/home_screen.dart';
 
 class CreateScreen extends StatefulWidget {
   @override
@@ -12,7 +14,6 @@ class _CreateScreenState extends State<CreateScreen> {
   String _title = '';
   String _description = '';
   String _location = '';
-  String _authorName = '';
   bool _isAnonymous = false;
   double _rating = 0.0;
   bool _isLoading = false; // Loading state
@@ -21,30 +22,35 @@ class _CreateScreenState extends State<CreateScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      setState(() {
-        _isLoading = true; // Show loading indicator
-      });
-
       try {
+        setState(() {
+          _isLoading = true; // Show loading indicator
+        });
+
+        // Get the current user
+        final user = FirebaseAuth.instance.currentUser;
+
         // Prepare post data
         final postData = {
           'title': _title,
           'description': _description,
           'location': _location,
           'rating': _rating,
+          'authorId': user!.uid, // Add the logged-in user's UID
+          'authorName':
+              _isAnonymous ? 'Anonymous' : user.displayName ?? 'Anonymous',
           'isAnonymous': _isAnonymous,
-          'authorName': _isAnonymous ? 'Anonymous' : _authorName,
           'timestamp': Timestamp.now(),
         };
 
-        // Upload post data to Firestore
+        // Add post to Firestore
         await FirebaseFirestore.instance.collection('posts').add(postData);
 
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text('Post created successfully!')));
 
-        // Reset the form and state
+        // Reset the form
         _formKey.currentState!.reset();
         setState(() {
           _rating = 0.0;
@@ -52,16 +58,20 @@ class _CreateScreenState extends State<CreateScreen> {
           _isLoading = false; // Hide loading indicator
         });
 
-        // Navigate back to Home Tab
-        Navigator.pop(context);
+        // Navigate to Home Page
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false, // Remove all previous routes
+        );
       } catch (e) {
         setState(() {
           _isLoading = false; // Hide loading indicator
         });
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to create post. Please try again.')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to create post: $e')));
       }
     }
   }
@@ -113,17 +123,6 @@ class _CreateScreenState extends State<CreateScreen> {
                             ? 'Please enter a location'
                             : null,
               ),
-
-              if (!_isAnonymous)
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Your Name'),
-                  onSaved: (value) => _authorName = value!.trim(),
-                  validator:
-                      (value) =>
-                          !_isAnonymous && (value == null || value.isEmpty)
-                              ? 'Please enter your name'
-                              : null,
-                ),
 
               Row(
                 children: [

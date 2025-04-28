@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trusthut/screens/post_detail_screen.dart';
 import 'search_screen.dart';
-import 'create_screen.dart';
-import 'profile_screen.dart';
+import 'create_screen.dart' as create;
+import 'package:trusthut/screens/profile_screen.dart'; // Ensure this file defines ProfileScreen
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,9 +14,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    PostsTab(), // Home tab displaying posts
+    PostsTab(), // Home tab displaying posts 
     SearchScreen(), // Search tab
-    CreateScreen(), // Placeholder for Create tab
+    create.CreateScreen(), // Placeholder for Create tab
     ProfileScreen(), // Placeholder for Profile tab
   ];
 
