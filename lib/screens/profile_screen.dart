@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'post_detail_screen.dart';
+import 'edit_post_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -24,9 +25,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  void _editPost(String postId, Map<String, dynamic> postData) async {
-    // Navigate to an edit screen (not implemented here)
-    // Pass the postId and postData to the edit screen
+  void _editPost(String postId, Map<String, dynamic> postData) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) => EditPostScreen(postId: postId, postData: postData),
+      ),
+    );
   }
 
   @override
@@ -68,7 +74,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   }
 
                   if (snapshot.hasError) {
-                    print("Error: ${snapshot.error}"); // Debug log for errors
                     return Center(
                       child: Text(
                         "An error occurred. Please try again later.",
@@ -135,6 +140,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                               ],
+                            ),
+                            trailing: PopupMenuButton<String>(
+                              icon: Icon(
+                                Icons.more_vert, // Three dots icon
+                                color: Color(
+                                  0xFFFFD3AC,
+                                ), // Match the text color
+                              ),
+                              onSelected: (value) {
+                                if (value == 'edit') {
+                                  _editPost(postId, post);
+                                } else if (value == 'delete') {
+                                  _deletePost(postId);
+                                }
+                              },
+                              itemBuilder:
+                                  (context) => [
+                                    PopupMenuItem(
+                                      value: 'edit',
+                                      child: Text('Edit'),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'delete',
+                                      child: Text('Delete'),
+                                    ),
+                                  ],
                             ),
                             onTap: () {
                               Navigator.push(
