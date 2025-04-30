@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     PostsTab(), // Home tab displaying posts
-    SearchScreen(), // Search tab
+    SearchTab(), // Search tab
     create.CreateScreen(), // Placeholder for Create tab
     ProfileScreen(), // Placeholder for Profile tab
   ];

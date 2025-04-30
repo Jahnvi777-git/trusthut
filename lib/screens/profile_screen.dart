@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context,
       MaterialPageRoute(
         builder:
-            (context) => EditPostScreen(postId: postId, postData: postData),
+            (context) => EditPostScreen(postId: postId, post: postData),
       ),
     );
   }

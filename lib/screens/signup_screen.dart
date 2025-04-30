@@ -9,7 +9,7 @@ class SignUpScreen extends StatelessWidget {
       TextEditingController();
   String _name = '';
   String _email = '';
-
+  String _password = '';  
   void _signUp(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
