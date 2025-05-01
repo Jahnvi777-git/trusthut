@@ -9,7 +9,7 @@ class SignUpScreen extends StatelessWidget {
       TextEditingController();
   String _name = '';
   String _email = '';
-  String _password = '';  
+  String _password = '';
   void _signUp(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -47,7 +47,11 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Sign Up")),
+      appBar: AppBar(
+        title: Text("TrustHut", style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: Colors.brown,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

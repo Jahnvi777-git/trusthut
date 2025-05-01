@@ -32,11 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          _titles[_currentIndex], // Dynamic title based on the selected tab
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        title: Text("TrustHut", style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
+        backgroundColor: Colors.brown, // Set the brown color for the AppBar
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

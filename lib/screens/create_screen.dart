@@ -21,8 +21,9 @@ class _CreateScreenState extends State<CreateScreen> {
   bool _isLoading = false;
   double _rating = 0.0;
 
-  GoogleMapController? _mapController;
+  // Removed unused _mapController field
   LatLng? _selectedLocation;
+  GoogleMapController? _mapController;
 
   Future<void> _getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
@@ -94,7 +95,6 @@ class _CreateScreenState extends State<CreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Create Post"), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(

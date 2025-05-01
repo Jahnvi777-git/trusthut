@@ -11,7 +11,11 @@ class PostDetailScreen extends StatelessWidget {
     final LatLng postLocation = LatLng(post['latitude'], post['longitude']);
 
     return Scaffold(
-      appBar: AppBar(title: Text(post['title']), centerTitle: true),
+      appBar: AppBar(
+        title: Text("TrustHut", style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: Colors.brown,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
