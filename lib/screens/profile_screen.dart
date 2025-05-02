@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'login_screen.dart'; // Import the Login Screen
 import 'post_detail_screen.dart';
 import 'edit_post_screen.dart';
 
@@ -11,6 +12,21 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final User? _currentUser = FirebaseAuth.instance.currentUser;
+
+  void _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (route) => false,
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to log out: $e')));
+    }
+  }
 
   void _deletePost(String postId) async {
     try {
@@ -29,8 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder:
-            (context) => EditPostScreen(postId: postId, post: postData),
+        builder: (context) => EditPostScreen(postId: postId, post: postData),
       ),
     );
   }
@@ -51,6 +66,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: 8),
             Text("Name: ${_currentUser?.displayName ?? 'Anonymous'}"),
             Text("Email: ${_currentUser?.email ?? 'Not available'}"),
+            SizedBox(height: 16),
+
+            // Logout Button
+            ElevatedButton.icon(
+              onPressed: _logout,
+              icon: Icon(Icons.logout),
+              label: Text("Logout"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.brown, // Button color
+                foregroundColor: Colors.white, // Text color
+              ),
+            ),
             SizedBox(height: 16),
 
             // User's Posts
@@ -125,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Text(
-                                  "Location: ${post['location']}",
+                                  "Location: ${post['locationName']}",
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color(0xFFFFD3AC), // Light text

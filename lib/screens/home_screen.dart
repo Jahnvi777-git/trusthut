@@ -178,7 +178,7 @@ class PostsTab extends StatelessWidget {
                               ),
                               SizedBox(height: 8),
                               Text(
-                                "Location: ${post['location']}",
+                                "Location: ${post['locationName']}",
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Color(0xFFFFD3AC),

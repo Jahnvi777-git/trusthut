@@ -20,8 +20,8 @@ class _CreateScreenState extends State<CreateScreen> {
   double? _longitude;
   bool _isLoading = false;
   double _rating = 0.0;
+  bool _isAnonymous = false; // Track if the post is anonymous
 
-  // Removed unused _mapController field
   LatLng? _selectedLocation;
   GoogleMapController? _mapController;
 
@@ -50,12 +50,18 @@ class _CreateScreenState extends State<CreateScreen> {
         final postData = {
           'title': _title,
           'description': _description,
-          'locationName': _locationName,
+          'locationName': _locationName ?? 'Unknown Location',
           'latitude': _latitude,
           'longitude': _longitude,
           'rating': _rating,
-          'authorId': user!.uid,
-          'authorName': user.displayName ?? 'Anonymous',
+          'authorId':
+              _isAnonymous
+                  ? null
+                  : user!.uid, // Save authorId as null for anonymous posts
+          'authorName':
+              _isAnonymous ? 'Anonymous' : user?.displayName ?? 'Anonymous',
+          'isAnonymous':
+              _isAnonymous, // Add this field to track anonymous posts
           'timestamp': Timestamp.now(),
         };
 
@@ -201,6 +207,23 @@ class _CreateScreenState extends State<CreateScreen> {
                     _rating = rating;
                   });
                 },
+              ),
+
+              SizedBox(height: 16),
+
+              // Anonymous Checkbox
+              Row(
+                children: [
+                  Checkbox(
+                    value: _isAnonymous,
+                    onChanged: (value) {
+                      setState(() {
+                        _isAnonymous = value!;
+                      });
+                    },
+                  ),
+                  Text("Post as Anonymous"),
+                ],
               ),
 
               SizedBox(height: 20),
