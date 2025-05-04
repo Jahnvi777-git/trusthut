@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Added FirebaseAuth import
 import 'package:trusthut/screens/post_detail_screen.dart';
 import 'search_screen.dart';
 import 'create_screen.dart' as create;
@@ -139,7 +140,11 @@ class PostsTab extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PostDetailScreen(post: post),
+                            builder:
+                                (context) => PostDetailScreen(
+                                  post: post,
+                                  postId: posts[index].id,
+                                ),
                           ),
                         );
                       },
@@ -186,6 +191,8 @@ class PostsTab extends StatelessWidget {
                               ),
                               SizedBox(height: 8),
                               Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Rating: ${post['rating']} ⭐",
@@ -193,6 +200,38 @@ class PostsTab extends StatelessWidget {
                                       fontSize: 14,
                                       color: Color(0xFFFFD3AC),
                                     ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          (post['likedBy'] != null &&
+                                                  (post['likedBy'] as List)
+                                                      .contains(
+                                                        FirebaseAuth
+                                                            .instance
+                                                            .currentUser
+                                                            ?.uid,
+                                                      ))
+                                              ? Icons.thumb_up
+                                              : Icons.thumb_up_outlined,
+                                          color: Colors.amber,
+                                        ),
+                                        onPressed: () async {
+                                          await toggleLike(
+                                            posts[index].id,
+                                            post,
+                                          );
+                                        },
+                                      ),
+                                      Text(
+                                        "${post['likes'] ?? 0}", // Display the number of likes
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xFFFFD3AC),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -230,5 +269,27 @@ class PostsTab extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+Future<void> toggleLike(String postId, Map<String, dynamic> postData) async {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) return; // Ensure the user is logged in
+
+  final postRef = FirebaseFirestore.instance.collection('posts').doc(postId);
+
+  if (postData['likedBy'] != null &&
+      (postData['likedBy'] as List).contains(user.uid)) {
+    // Unlike the post
+    await postRef.update({
+      'likes': FieldValue.increment(-1),
+      'likedBy': FieldValue.arrayRemove([user.uid]),
+    });
+  } else {
+    // Like the post
+    await postRef.update({
+      'likes': FieldValue.increment(1),
+      'likedBy': FieldValue.arrayUnion([user.uid]),
+    });
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth
 import 'post_detail_screen.dart'; // Import the PostDetailScreen
 
 class SearchTab extends StatefulWidget {
@@ -150,7 +151,11 @@ class _SearchTabState extends State<SearchTab> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PostDetailScreen(post: post),
+                            builder:
+                                (context) => PostDetailScreen(
+                                  post: post,
+                                  postId: filteredPosts[index].id,
+                                ),
                           ),
                         );
                       },
@@ -181,9 +186,31 @@ class _SearchTabState extends State<SearchTab> {
                                 style: TextStyle(fontSize: 16),
                               ),
                               SizedBox(height: 8),
-                              Text(
-                                "Rating: ${post['rating']} ⭐",
-                                style: TextStyle(fontSize: 16),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Rating: ${post['rating']} ⭐",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xFFFFD3AC),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.thumb_up, color: Colors.amber),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        "${post['likes'] ?? 0}", // Display the number of likes
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xFFFFD3AC),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                               SizedBox(height: 8),
                               Text(

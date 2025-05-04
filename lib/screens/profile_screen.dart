@@ -198,7 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (context) => PostDetailScreen(post: post),
+                                      (context) => PostDetailScreen(post: post, postId: postId),
                                 ),
                               );
                             },

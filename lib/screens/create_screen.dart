@@ -54,15 +54,13 @@ class _CreateScreenState extends State<CreateScreen> {
           'latitude': _latitude,
           'longitude': _longitude,
           'rating': _rating,
-          'authorId':
-              _isAnonymous
-                  ? null
-                  : user!.uid, // Save authorId as null for anonymous posts
+          'authorId': _isAnonymous ? null : user!.uid,
           'authorName':
               _isAnonymous ? 'Anonymous' : user?.displayName ?? 'Anonymous',
-          'isAnonymous':
-              _isAnonymous, // Add this field to track anonymous posts
+          'isAnonymous': _isAnonymous,
           'timestamp': Timestamp.now(),
+          'likes': 0, // Initialize likes to 0
+          'likedBy': [], // Initialize likedBy as an empty list
         };
 
         await FirebaseFirestore.instance.collection('posts').add(postData);
