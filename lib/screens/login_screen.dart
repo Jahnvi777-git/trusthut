@@ -37,7 +37,8 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("TrustHut", style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: Colors.brown,
+        backgroundColor: Color(0xFFFFB6A0), // Peach for AppBar
+        elevation: 0, // Flat AppBar
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -49,25 +50,27 @@ class LoginScreen extends StatelessWidget {
               // Email Field
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: "Email"),
-                validator:
-                    (value) =>
-                        value == null || !value.contains('@')
-                            ? "Enter a valid email"
-                            : null,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  labelStyle: TextStyle(color: Color(0xFF2A3A4A)), // Dark blue text
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) =>
+                    value == null || !value.contains('@') ? "Enter a valid email" : null,
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 16),
 
               // Password Field
               TextFormField(
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: "Password"),
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  labelStyle: TextStyle(color: Color(0xFF2A3A4A)), // Dark blue text
+                  border: OutlineInputBorder(),
+                ),
                 obscureText: true,
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? "Please enter your password"
-                            : null,
+                validator: (value) =>
+                    value == null || value.isEmpty ? "Please enter your password" : null,
               ),
               SizedBox(height: 16),
 
@@ -75,6 +78,10 @@ class LoginScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () => _login(context),
                 child: Text("Login"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF4A90A4), // Teal button color
+                  foregroundColor: Colors.white, // White text
+                ),
               ),
               SizedBox(height: 16),
 
@@ -86,12 +93,16 @@ class LoginScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SignUpScreen()),
                   );
                 },
-                child: Text("Don't have an account? Sign Up"),
+                child: Text(
+                  "Don't have an account? Sign Up",
+                  style: TextStyle(color: Color(0xFF2A3A4A)), // Dark blue text
+                ),
               ),
             ],
           ),
         ),
       ),
+      backgroundColor: Color(0xFFEAF6F6), // Light blue background
     );
   }
 }

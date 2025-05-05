@@ -53,6 +53,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Your Profile", style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: Color(0xFFEAF6F6), // Peach for AppBar
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -61,11 +66,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // User Details
             Text(
               "User Details",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2A3A4A)), // Dark blue text
             ),
             SizedBox(height: 8),
-            Text("Name: ${_currentUser?.displayName ?? 'Anonymous'}"),
-            Text("Email: ${_currentUser?.email ?? 'Not available'}"),
+            Text(
+              "Name: ${_currentUser?.displayName ?? 'Anonymous'}",
+              style: TextStyle(fontSize: 16, color: Color(0xFF2A3A4A)), // Dark blue text
+            ),
+            Text(
+              "Email: ${_currentUser?.email ?? 'Not available'}",
+              style: TextStyle(fontSize: 16, color: Color(0xFF2A3A4A)), // Dark blue text
+            ),
             SizedBox(height: 16),
 
             // Logout Button
@@ -74,8 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icon(Icons.logout),
               label: Text("Logout"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.brown, // Button color
-                foregroundColor: Colors.white, // Text color
+                backgroundColor: Color(0xFF4A90A4), // Teal button color
+                foregroundColor: Colors.white, // White text
               ),
             ),
             SizedBox(height: 16),
@@ -83,17 +94,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // User's Posts
             Text(
               "Your Posts",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2A3A4A)), // Dark blue text
             ),
             SizedBox(height: 8),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance
-                        .collection('posts')
-                        .where('authorId', isEqualTo: _currentUser?.uid)
-                        .orderBy('timestamp', descending: true)
-                        .snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('posts')
+                    .where('authorId', isEqualTo: _currentUser?.uid)
+                    .orderBy('timestamp', descending: true)
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -103,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return Center(
                       child: Text(
                         "An error occurred. Please try again later.",
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: TextStyle(fontSize: 16, color: Color(0xFF2A3A4A)), // Dark blue text
                       ),
                     );
                   }
@@ -114,8 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return ListView.builder(
                       itemCount: posts.length,
                       itemBuilder: (context, index) {
-                        final post =
-                            posts[index].data() as Map<String, dynamic>;
+                        final post = posts[index].data() as Map<String, dynamic>;
                         final postId = posts[index].id;
 
                         return Card(
@@ -123,9 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             horizontal: 16,
                             vertical: 8,
                           ),
-                          color: Color(
-                            0xFF331C08,
-                          ), // Dark background for each post
+                          color: Color(0xFF4A90A4), // Teal background for each post
                           elevation: 4,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -137,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFFFFD3AC), // Light text
+                                color: Colors.white, // White text
                               ),
                             ),
                             subtitle: Column(
@@ -148,31 +155,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   "Rating: ${post['rating']} ⭐",
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Color(0xFFFFD3AC), // Light text
+                                    color: Colors.white, // White text
                                   ),
                                 ),
                                 Text(
                                   "Location: ${post['locationName']}",
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Color(0xFFFFD3AC), // Light text
+                                    color: Colors.white, // White text
                                   ),
                                 ),
                                 Text(
                                   "Description: ${post['description']}",
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Color(0xFFFFD3AC), // Light text
+                                    color: Colors.white, // White text
                                   ),
                                 ),
                               ],
                             ),
                             trailing: PopupMenuButton<String>(
                               icon: Icon(
-                                Icons.more_vert, // Three dots icon
-                                color: Color(
-                                  0xFFFFD3AC,
-                                ), // Match the text color
+                                Icons.more_vert,
+                                color: Colors.white, // White icon
                               ),
                               onSelected: (value) {
                                 if (value == 'edit') {
@@ -181,24 +186,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   _deletePost(postId);
                                 }
                               },
-                              itemBuilder:
-                                  (context) => [
-                                    PopupMenuItem(
-                                      value: 'edit',
-                                      child: Text('Edit'),
-                                    ),
-                                    PopupMenuItem(
-                                      value: 'delete',
-                                      child: Text('Delete'),
-                                    ),
-                                  ],
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  value: 'edit',
+                                  child: Text('Edit'),
+                                ),
+                                PopupMenuItem(
+                                  value: 'delete',
+                                  child: Text('Delete'),
+                                ),
+                              ],
                             ),
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:
-                                      (context) => PostDetailScreen(post: post, postId: postId),
+                                  builder: (context) => PostDetailScreen(post: post, postId: postId),
                                 ),
                               );
                             },
@@ -211,7 +214,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   return Center(
                     child: Text(
                       "You haven't posted anything yet.",
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: TextStyle(fontSize: 16, color: Color(0xFF2A3A4A)), // Dark blue text
                     ),
                   );
                 },

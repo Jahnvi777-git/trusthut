@@ -66,6 +66,7 @@ flutter:
   uses-material-design: true
   assets:
     - lib/assets/images/splash_image.png
+    - lib/assets/images/trusthut_icon.png
   fonts:
     - family: Roboto
       fonts:

@@ -35,12 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text("TrustHut", style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: Colors.brown, // Set the brown color for the AppBar
+        backgroundColor: Color(0xFFFFB6A0), // Peach for AppBar
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onItemTapped,
+        selectedItemColor: Color(0xFF4A90A4), // Teal for selected items
+        unselectedItemColor: Color(0xFF2A3A4A), // Dark blue for unselected items
+        backgroundColor: Color(0xFFEAF6F6), // Light blue for BottomNavigationBar
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
@@ -56,7 +59,7 @@ class PostsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFFFD3AC), // Light background for the Home Tab
+      color: Color(0xFFEAF6F6), // Light blue background for the Home Tab
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -69,7 +72,7 @@ class PostsTab extends StatelessWidget {
                 Icon(
                   Icons.location_on,
                   size: 40,
-                  color: Color(0xFF331C08), // Dark icon color
+                  color: Color(0xFF4A90A4), // Teal icon color
                 ),
                 SizedBox(height: 8),
                 // TrustHut Text
@@ -78,7 +81,7 @@ class PostsTab extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24, // Increased font size
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF331C08), // Dark text
+                    color: Color(0xFF2A3A4A), // Dark blue text
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -88,14 +91,14 @@ class PostsTab extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF331C08), // Dark text
+                    color: Color(0xFF2A3A4A), // Dark blue text
                   ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 16),
                 // Decorative Divider
                 Divider(
-                  color: Color(0xFF331C08),
+                  color: Color(0xFF4A90A4), // Teal divider color
                   thickness: 1.5,
                   indent: 50,
                   endIndent: 50,
@@ -107,11 +110,10 @@ class PostsTab extends StatelessWidget {
           // Posts Carousel
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance
-                      .collection('posts')
-                      .orderBy('timestamp', descending: true)
-                      .snapshots(),
+              stream: FirebaseFirestore.instance
+                  .collection('posts')
+                  .orderBy('timestamp', descending: true)
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -140,11 +142,10 @@ class PostsTab extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                                (context) => PostDetailScreen(
-                                  post: post,
-                                  postId: posts[index].id,
-                                ),
+                            builder: (context) => PostDetailScreen(
+                              post: post,
+                              postId: posts[index].id,
+                            ),
                           ),
                         );
                       },
@@ -157,9 +158,7 @@ class PostsTab extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         elevation: 4,
-                        color: Color(
-                          0xFF331C08,
-                        ), // Dark background for the card
+                        color: Color(0xFF4A90A4), // Teal background for the card
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
@@ -170,7 +169,7 @@ class PostsTab extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFFFFD3AC), // Light text
+                                  color: Color(0xFFFFFFFF), // White text
                                 ),
                               ),
                               SizedBox(height: 8),
@@ -178,7 +177,7 @@ class PostsTab extends StatelessWidget {
                                 "Author: ${post['authorName']}",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xFFFFD3AC),
+                                  color: Color(0xFFFFFFFF), // White text
                                 ),
                               ),
                               SizedBox(height: 8),
@@ -186,7 +185,7 @@ class PostsTab extends StatelessWidget {
                                 "Location: ${post['locationName']}",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xFFFFD3AC),
+                                  color: Color(0xFFFFFFFF), // White text
                                 ),
                               ),
                               SizedBox(height: 8),
@@ -198,7 +197,7 @@ class PostsTab extends StatelessWidget {
                                     "Rating: ${post['rating']} ⭐",
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Color(0xFFFFD3AC),
+                                      color: Color(0xFFFFFFFF), // White text
                                     ),
                                   ),
                                   Row(
@@ -208,8 +207,7 @@ class PostsTab extends StatelessWidget {
                                           (post['likedBy'] != null &&
                                                   (post['likedBy'] as List)
                                                       .contains(
-                                                        FirebaseAuth
-                                                            .instance
+                                                        FirebaseAuth.instance
                                                             .currentUser
                                                             ?.uid,
                                                       ))
@@ -228,7 +226,7 @@ class PostsTab extends StatelessWidget {
                                         "${post['likes'] ?? 0}", // Display the number of likes
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: Color(0xFFFFD3AC),
+                                          color: Color(0xFFFFFFFF), // White text
                                         ),
                                       ),
                                     ],
@@ -241,7 +239,7 @@ class PostsTab extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFFFFD3AC),
+                                  color: Color(0xFFFFFFFF), // White text
                                 ),
                               ),
                               SizedBox(height: 4),
@@ -249,12 +247,10 @@ class PostsTab extends StatelessWidget {
                                 post['description'],
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xFFFFD3AC),
+                                  color: Color(0xFFFFFFFF), // White text
                                 ),
                                 maxLines: 3, // Limit to 3 lines
-                                overflow:
-                                    TextOverflow
-                                        .ellipsis, // Add ellipsis if text overflows
+                                overflow: TextOverflow.ellipsis, // Add ellipsis if text overflows
                               ),
                             ],
                           ),

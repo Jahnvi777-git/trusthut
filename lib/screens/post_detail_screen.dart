@@ -8,7 +8,7 @@ class PostDetailScreen extends StatefulWidget {
   final String postId;
 
   const PostDetailScreen({Key? key, required this.post, required this.postId})
-    : super(key: key);
+      : super(key: key);
 
   @override
   _PostDetailScreenState createState() => _PostDetailScreenState();
@@ -60,9 +60,13 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("TrustHut", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          "TrustHut",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.brown,
+        backgroundColor: Color(0xFFFFB6A0), // Peach for AppBar
+        elevation: 0, // Flat AppBar
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +98,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               children: [
                 Text(
                   post['title'],
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2A3A4A), // Dark blue for text
+                  ),
                 ),
                 SizedBox(height: 16),
                 Row(
@@ -102,7 +110,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   children: [
                     Text(
                       "Rating: ${post['rating']} ⭐",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xFF2A3A4A), // Dark blue for text
+                      ),
                     ),
                     Row(
                       children: [
@@ -122,7 +133,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         ),
                         Text(
                           "${post['likes'] ?? 0}", // Display the number of likes
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF2A3A4A), // Dark blue for text
+                          ),
                         ),
                       ],
                     ),
@@ -131,27 +145,48 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                 SizedBox(height: 8),
                 Text(
                   "Location: ${post['locationName']}",
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF2A3A4A), // Dark blue for text
+                  ),
                 ),
                 SizedBox(height: 8),
                 Text(
                   "Author: ${post['authorName']}",
-                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                    color: Color(0xFF2A3A4A), // Dark blue for text
+                  ),
                 ),
                 SizedBox(height: 16),
-                Divider(),
+                Divider(
+                  color: Color(0xFF4A90A4), // Teal divider
+                  thickness: 1.5,
+                ),
                 SizedBox(height: 16),
                 Text(
                   "Description:",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2A3A4A), // Dark blue for text
+                  ),
                 ),
                 SizedBox(height: 8),
-                Text(post['description'], style: TextStyle(fontSize: 16)),
+                Text(
+                  post['description'],
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF2A3A4A), // Dark blue for text
+                  ),
+                ),
               ],
             ),
           ),
         ],
       ),
+      backgroundColor: Color(0xFFEAF6F6), // Light blue background for the screen
     );
   }
 }

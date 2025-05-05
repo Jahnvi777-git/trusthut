@@ -23,10 +23,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFD3AC), // Light peach background
+      backgroundColor: Color(0xFFEAF6F6), // Light peach background
       body: Center(
         child: Image.asset(
-          'lib/assets/images/splash_image.png', // Path to your splash image
+          'lib/assets/images/trusthut_icon.png', // Path to your splash image
           // width: 200, // Adjust the width as needed
           height: 500, // Adjust the height as needed
         ),
