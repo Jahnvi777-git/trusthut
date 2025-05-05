@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'screens/splash_screen.dart'; // Import the splash screen
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 
@@ -53,10 +54,11 @@ class MyApp extends StatelessWidget {
           unselectedItemColor: Color(0xFF664C36), // Medium brown for unselected items
         ),
       ),
-      initialRoute: '/',
+      initialRoute: '/', // Set the initial route
       routes: {
-        '/': (context) => LoginScreen(),
-        '/home': (context) => HomeScreen(),
+        '/': (context) => SplashScreen(), // Splash screen as the initial route
+        '/login': (context) => LoginScreen(), // Login screen
+        '/home': (context) => HomeScreen(), // Home screen
       },
     );
   }
