@@ -57,4 +57,4 @@ The goal of TrustHut is to build a reliable, searchable hub for accessibility in
 
 ## 📽 Demo
 
-[Watch Demo Video on Google Drive](https://drive.google.com/drive/folders/1cq4Dr_keZulAga-DkwSUcd8pBgUnWiiW?usp=drive_link)
+[Watch Demo Video on Google Drive](https://drive.google.com/drive/folders/1cq4Dr_keZulAga-DkwSUcd8pBgUnWiiW?usp=sharing)
